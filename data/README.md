@@ -74,3 +74,47 @@ The preparation process will document:
 - Reproducibility information
 
 The final Step-2 preparation will provide sufficient valid documented records/scenarios for the allocated capstone requirements.
+
+## Fuzzy Logic Scenario Categories
+
+The Fuzzy Logic component will use the following scenario categories:
+
+### 1. Normal scenarios
+
+Normal scenarios represent valid operating conditions within the defined input ranges.
+
+### 2. Boundary scenarios
+
+Boundary scenarios test values close to or at the defined limits of the input ranges.
+
+Examples include:
+
+- Soil moisture near 0% or 100%
+- Temperature near -10°C or 60°C
+- Humidity near 0% or 100%
+- Rainfall near 0 mm or 500 mm
+- Soil pH near 0 or 14
+
+### 3. Stress scenarios
+
+Stress scenarios represent valid but demanding environmental conditions, such as:
+
+- Very low soil moisture
+- High temperature with low humidity
+- Low rainfall
+- Combinations of dry soil and high environmental demand
+
+### 4. Invalid scenarios
+
+Invalid scenarios are used only for validation testing and are not included as valid ANN training data.
+
+Examples include:
+
+- Soil moisture below 0% or above 100%
+- Temperature outside -10°C to 60°C
+- Humidity outside 0% to 100%
+- Rainfall below 0 mm or above 500 mm
+- Soil pH outside 0 to 14
+- Invalid irrigation target values
+
+The scenario category and validation rules will be documented so that the scenario-generation process remains reproducible.
