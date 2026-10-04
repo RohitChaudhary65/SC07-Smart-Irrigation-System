@@ -12,6 +12,33 @@ RANDOM_SEED = 42
 TOTAL_SCENARIOS = 10000
 
 
+def classify_scenario(soil, temperature, humidity, rainfall, ph):
+    """Classify a valid scenario for the Fuzzy Logic component."""
+
+    # Stress: demanding irrigation conditions
+    if (soil < 20 and rainfall < 10) or (
+        temperature > 40 and humidity < 30
+    ):
+        return "stress"
+
+    # Boundary: values close to defined input limits
+    if (
+        soil <= 5
+        or soil >= 95
+        or temperature <= -5
+        or temperature >= 55
+        or humidity <= 5
+        or humidity >= 95
+        or rainfall <= 5
+        or rainfall >= 495
+        or ph <= 1
+        or ph >= 13
+    ):
+        return "boundary"
+
+    return "normal"
+
+
 def generate_scenarios():
     """Generate reproducible irrigation scenarios."""
 
@@ -27,11 +54,18 @@ def generate_scenarios():
         rainfall = round(random.uniform(0, 500), 2)
         soil_ph = round(random.uniform(0, 14), 2)
 
-        # Simple baseline rule for the irrigation target.
         if soil_moisture < 35 and rainfall < 20:
             irrigation_target = 1
         else:
             irrigation_target = 0
+
+        scenario_type = classify_scenario(
+            soil_moisture,
+            temperature,
+            humidity,
+            rainfall,
+            soil_ph,
+        )
 
         scenarios.append(
             {
@@ -42,6 +76,7 @@ def generate_scenarios():
                 "rainfall_mm": rainfall,
                 "soil_ph": soil_ph,
                 "irrigation_target": irrigation_target,
+                "scenario_type": scenario_type,
             }
         )
 
@@ -52,8 +87,10 @@ def validate_scenarios(df):
     """Validate generated scenarios."""
 
     assert len(df) == TOTAL_SCENARIOS
-
     assert df["scenario_id"].is_unique
+    assert df["scenario_type"].isin(
+        ["normal", "boundary", "stress"]
+    ).all()
 
     assert df["soil_moisture_pct"].between(0, 100).all()
     assert df["temperature_c"].between(-10, 60).all()
@@ -65,16 +102,17 @@ def validate_scenarios(df):
     assert df.isnull().sum().sum() == 0
 
     print("SCENARIO VALIDATION PASSED")
+    print("\nScenario type counts:")
+    print(df["scenario_type"].value_counts())
 
 
 def save_scenarios(df):
     """Save generated scenarios."""
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
     df.to_csv(OUTPUT_FILE, index=False)
 
-    print(f"Scenarios saved to: {OUTPUT_FILE}")
+    print(f"\nScenarios saved to: {OUTPUT_FILE}")
 
 
 def main():
@@ -85,7 +123,6 @@ def main():
     print(f"Generated scenarios: {len(df)}")
 
     validate_scenarios(df)
-
     save_scenarios(df)
 
     print("=== SCENARIO GENERATION COMPLETED ===")
