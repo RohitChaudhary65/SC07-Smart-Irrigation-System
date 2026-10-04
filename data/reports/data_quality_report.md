@@ -107,7 +107,38 @@ The scenario plan includes:
 
 Invalid scenarios are intended for validation testing and are not included as valid ANN training data.
 
-## 7. Reproducibility
+## 7. ANN Dataset Split
+
+The 10,000 generated scenarios were divided into reproducible datasets for the ANN component.
+
+The split was performed using a fixed random seed of 42 and stratification based on `irrigation_target`.
+
+- Training dataset: 7,000 records (70%)
+- Validation dataset: 1,500 records (15%)
+- Test dataset: 1,500 records (15%)
+- Total: 10,000 records
+
+The ANN input features are:
+
+- `soil_moisture_pct`
+- `temperature_c`
+- `humidity_pct`
+- `rainfall_mm`
+- `soil_ph`
+
+The target variable is:
+
+- `irrigation_target`
+
+The resulting files are:
+
+- `data/processed/ann_train.csv`
+- `data/processed/ann_validation.csv`
+- `data/processed/ann_test.csv`
+
+The `scenario_type` field is not used as an ANN input feature.
+
+## 8. Reproducibility
 
 The data preparation process is implemented through Python scripts.
 
@@ -115,7 +146,7 @@ The data preparation process is implemented through Python scripts.
 - `src/generate_scenarios.py` generates reproducible irrigation scenarios.
 - Random seed: 42.
 
-## 8. Limitations
+## 9. Limitations
 
 The original starter dataset contains only 20 observations and represents development/test values.
 
