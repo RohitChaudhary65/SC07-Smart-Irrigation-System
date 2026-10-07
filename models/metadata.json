@@ -1,0 +1,23 @@
+{
+    "project": "SC07 Smart Irrigation System",
+    "model": "MLPClassifier",
+    "hidden_layers": [
+        16,
+        8
+    ],
+    "activation": "relu",
+    "solver": "adam",
+    "max_iter": 500,
+    "random_state": 42,
+    "features": [
+        "soil_moisture_pct",
+        "temperature_c",
+        "humidity_pct",
+        "rainfall_mm",
+        "soil_ph"
+    ],
+    "target": "irrigation_target",
+    "test_accuracy": 1.0,
+    "training_samples": 16,
+    "testing_samples": 4
+}
