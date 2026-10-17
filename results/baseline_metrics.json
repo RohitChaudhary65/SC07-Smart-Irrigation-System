@@ -1,0 +1,8 @@
+{
+    "test_samples": 4,
+    "metric": "accuracy",
+    "baseline_accuracy": 1.0,
+    "ann_accuracy": 1.0,
+    "difference_percentage_points": 0.0,
+    "baseline_rule": "Irrigation ON if soil moisture < 30%; otherwise OFF"
+}
