@@ -5,10 +5,14 @@
 
 ## Team and project
 - Project code and title: SC07 - Smart Irrigation System
-- Team name: [enter registered team name]
-- Team members: [enter actual names]
+- Team name: Fuzzy Pointers
+- Team members:
+  1. Rohit Chaudhary (Team Leader)
+  2. Prince Kumar
+  3. Md. Kaif Khan
+  4. Avika
 - Step 5 branch: `step-5-product-v1`
-- Commit: [enter commit hash after committing]
+- Commit: `658a290`
 
 ## User task
 A farmer, gardener or irrigation operator enters soil moisture, temperature,
@@ -69,29 +73,43 @@ The saved ANN/scaler artifacts were serialized with scikit-learn 1.9.1.
 Use that version to avoid model-persistence compatibility warnings/errors.
 
 ## Automated tests
+
 Run from the repository root:
 
 ```bash
 python -m unittest test_product_predict -v
 ```
 
-Record the actual terminal output and result here:
-- Date/time:
-- Python version:
-- scikit-learn version:
-- Tests passed:
-- Test output/evidence path:
+Recorded test details:
+- Date/time: 08-11-2026 16:12 IST
+- Python version: 3.14.3
+- scikit-learn version: 1.9.1
+- Tests passed: 5 out of 5
+- Test output/evidence path: `docs/evidence/step5/04-test-output.png`
 
+Actual test output:
+
+```text
+test_boundary_values ... ok
+test_missing_and_nonnumeric_values ... ok
+test_nan_and_infinity ... ok
+test_normal_input ... ok
+test_out_of_range_values ... ok
+
+Ran 5 tests in 0.001s
+
+OK
+```
 ## Manual test observations
 
 | Case | Input / action | Expected behaviour | Actual observation | Pass/Fail |
 |---|---|---|---|---|
-| Normal | Use valid values in all five fields | ANN and baseline results display | [record] | [record] |
-| Boundary | Test each documented minimum/maximum | Accepted by validation | [record] | [record] |
-| Missing | Remove/omit a required value in a direct function test | Clear required-value error | [record] | [record] |
-| Invalid | Try text, NaN/infinity and out-of-range values in direct tests | Clear validation error; no prediction | [record] | [record] |
-| Missing model | In a temporary copy, rename one model artifact and launch | Clear model-loading error; no fake result | [record] | [record] |
-| Consistency | Run `python -m src.check_product_prediction` and enter the same values in UI | Matching ANN class | [record] | [record] |
+| Normal | Soil moisture: 25%, Temperature: 30°C, Humidity: 65%, Rainfall: 0 mm, Soil pH: 7 | ANN and baseline results display | ANN predicted Class 0 (Irrigation not required), while baseline predicted Class 1 (Irrigation required). | Pass |
+| Boundary | Test minimum and maximum values for all five inputs | Accepted by validation | Boundary value tests passed successfully in automated testing. | Pass |
+| Missing | Omit a required input in a direct function test | Clear required-value error | Missing-value validation test passed successfully. | Pass |
+| Invalid | Enter humidity as 250% in the application | Clear validation error; no prediction | Application displayed a clear humidity range error and did not crash. | Pass |
+| Missing model | Temporarily rename a model artifact in a separate copy and launch | Clear model-loading error; no fake result | Not tested yet. | Not tested |
+| Consistency | Compare direct prediction with the same values in the UI | Matching ANN class | Not tested yet. | Not tested |
 
 ## Screenshots and evidence
 Save actual screenshots in `docs/evidence/step5/`:
@@ -103,10 +121,19 @@ Save actual screenshots in `docs/evidence/step5/`:
 Do not include passwords, access codes or private information.
 
 ## Earlier feedback addressed
-- [Paste each relevant Step 1-4 feedback item.]
-- [Describe the correction and the file/commit proving it.]
-- Unresolved issues: [state honestly, or write None only after review.]
 
+- Added a Streamlit-based user interface to make the Smart Irrigation System usable.
+- Connected the saved ANN model and StandardScaler for actual prediction without retraining when the user clicks the prediction button.
+- Added input validation for missing, non-numeric, NaN, infinite and out-of-range values.
+- Added comparison between the ANN prediction and the Step 4 soil-moisture threshold baseline.
+- Added automated validation tests and captured screenshots as evidence.
+- Corrections are available in `app.py`, `src/product_predict.py` and `test_product_predict.py`.
+- Initial Product V1 implementation commit: `658a290`.
+
+Unresolved issues:
+- Specific Step 1–4 feedback items still need to be reviewed against the published project feedback.
+- Missing-model and UI/direct-prediction consistency manual tests are not yet completed.
+- The model has limited test evidence and requires further real-world validation.
 ## Limitations and responsible use
 - The Step 3 report describes a test split of only four samples and 100%
   accuracy on that small split. This is not sufficient evidence of real-world
@@ -119,5 +146,12 @@ Do not include passwords, access codes or private information.
   It does not implement the planned fuzzy component.
 
 ## Team contributions
-- [Member name]: [actual implementation/testing/documentation contribution]
-- [Member name]: [actual contribution]
+
+All team members contributed equally to the development and completion of the SC07 Smart Irrigation System project. There were no fixed individual roles or separate responsibilities. All members worked together on project development, implementation, testing, documentation, improvements and uploading the project files to GitHub.
+
+- **Rohit Chaudhary:** Equal contribution to project development, testing, documentation and GitHub uploading.
+- **Prince Kumar:** Equal contribution to project development, testing, documentation and GitHub uploading.
+- **Md. Kaif Khan:** Equal contribution to project development, testing, documentation and GitHub uploading.
+- **Avika:** Equal contribution to project development, testing, documentation and GitHub uploading.
+
+All team members participated collaboratively and shared responsibilities throughout the project.
